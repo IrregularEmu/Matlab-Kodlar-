@@ -1,0 +1,21 @@
+% Time axis: from 0 to 50 ms with 1000 points
+t = linspace(0, 0.05, 1000);  % seconds
+
+% Simulated unfiltered power supply noise: ripple (100 Hz) + high-frequency noise (5 kHz)
+vs_unfiltered = 5 + 0.1 * sin(2 * pi * 100 * t) + 0.05 * sin(2 * pi * 5000 * t);
+
+% Simulated filtered VS (0.1µF + 1µF capacitors):  attenuation of both ripple and HF noise
+vs_filtered = 5 + 0.05 * sin(2 * pi * 100 * t) + 0.005 * sin(2 * pi * 5000 * t);
+
+% Plotting
+figure;
+plot(t, vs_unfiltered, 'r', 'DisplayName', 'VS without capacitors (no filtering)', 'LineWidth', 1);
+hold on;
+plot(t, vs_filtered, 'g', 'DisplayName', 'VS with 0.1µF + 1µF capacitors (filtered)', 'LineWidth', 2);
+yline(5, '--', 'Nominal VS (5V)', 'Color', [0.3 0.3 0.3]);
+
+title('Effect of Decoupling Capacitors on VS Noise');
+xlabel('Time (s)');
+ylabel('VS Voltage (V)');
+legend('Location', 'best');
+grid on;
